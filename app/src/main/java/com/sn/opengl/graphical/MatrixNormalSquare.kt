@@ -13,7 +13,9 @@ import com.sn.opengl.shader.VertexShader
 
 /**
  * Created by GuoXu on 2020/11/19 19:49.
- *
+ *  https://blog.csdn.net/qq_38410236/article/details/94399792
+ *  https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/
+ *  https://github.com/wzyitspider/Android_BlogDemo_Opengl
  */
 class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
 
@@ -69,6 +71,7 @@ class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRende
     override fun drawGraphical() {
 //        val scratch = FloatArray(16)
         // Set the camera position (View matrix)
+//        设置观察视角 eye相机坐标 center 目标坐标 up 相机正上方 向量vuv(相机头部指向)
         Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, -3f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
         // Calculate the projection and view transformation
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)

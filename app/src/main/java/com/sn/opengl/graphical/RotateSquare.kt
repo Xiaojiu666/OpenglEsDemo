@@ -74,7 +74,7 @@ class RotateSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
         val angle = 0.090f * time.toInt()
         Log.e(TAG, "angle $angle")
         // X\Y\Z -1~1  顺序不同
-        Matrix.setRotateM(rotationMatrix, 0, angle, 1f, 0f, 0f)
+        Matrix.setRotateM(rotationMatrix, 0, angle, 0f, 0f, 1f)
         // Combine the rotation matrix with the projection and camera view
         // Note that the vPMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
