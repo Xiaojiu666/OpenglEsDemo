@@ -13,12 +13,19 @@ object VertexShader {
     val VertexShaderCode_MVPMatrix =
     // This matrix member variable provides a hook to manipulate
         // the coordinates of the objects that use this vertex shader
-                "uniform mat4 uMVPMatrix;" +
+        "uniform mat4 uMVPMatrix;" +
                 "attribute vec4 vPosition;" +
                 "void main() {" +
-                // the matrix must be included as a modifier of gl_Position
-                // Note that the uMVPMatrix factor *must be first* in order
-                // for the matrix multiplication product to be correct.
                 "  gl_Position = uMVPMatrix * vPosition;" +
+                "}"
+
+    //带纹理的顶点着色器
+    val VertexShaderCode_Texture =
+        "attribute vec4 av_Position;\n" +
+                "attribute vec2 af_Position;\n" +
+                "varying vec2 v_texPo;\n" +
+                "void main() \n" +
+                "    v_texPo = af_Position;\n" +
+                "    gl_Position = av_Position;\n" +
                 "}"
 }

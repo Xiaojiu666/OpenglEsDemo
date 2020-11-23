@@ -6,11 +6,18 @@ package com.sn.opengl.shader
  */
 object FragmentShader {
 
-     val FragmentShaderCode = "precision mediump float;" +
+    const val FragmentShaderCode = "precision mediump float;" +
             "uniform vec4 vColor;" +
             "void main() {" +
             "  gl_FragColor = vColor;" +
             "}"
+
+    val FragmentShaderCode_Texture = "precision mediump float;\n" +
+            "    varying vec2 v_texPo;\n" +
+            "    uniform sampler2D sTexture;\n" +
+            "    void main() {\n" +
+            "        gl_FragColor=texture2D(sTexture, v_texPo);\n" +
+            "    }"
 
 
 }

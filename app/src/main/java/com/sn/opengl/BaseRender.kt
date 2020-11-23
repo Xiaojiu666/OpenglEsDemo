@@ -1,8 +1,10 @@
 package com.sn.opengl
 
+import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
-import android.opengl.Matrix
+import android.util.Log
+import java.nio.ByteBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -10,14 +12,14 @@ import javax.microedition.khronos.opengles.GL10
  * Created by GuoXu on 2020/11/19 19:16.
  *
  */
-abstract class BaseRender : GLSurfaceView.Renderer {
-
+abstract class  BaseRender : GLSurfaceView.Renderer {
 
 
     override fun onDrawFrame(p0: GL10?) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         drawGraphical()
     }
+
     override fun onSurfaceChanged(p0: GL10?, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)
         surfaceChanged(width, height)
@@ -30,7 +32,7 @@ abstract class BaseRender : GLSurfaceView.Renderer {
         initGl()
     }
 
-    abstract fun surfaceChanged( width: Int, height: Int)
+    abstract fun surfaceChanged(width: Int, height: Int)
 
     abstract fun initGl()
 
@@ -45,6 +47,16 @@ abstract class BaseRender : GLSurfaceView.Renderer {
         GLES20.glShaderSource(shader, shaderCode)
         GLES20.glCompileShader(shader)
         return shader
+    }
+
+
+    fun setTextureImage(bitmap: Bitmap) {
+        val tmp = ByteArray(bitmap.width * bitmap.height * 4)
+        val wrap = ByteBuffer.wrap(tmp)
+        wrap.position(0)
+        val byteCount: Int = bitmap.byteCount
+        bitmap.copyPixelsToBuffer(wrap) //默认都是3264*2448
+        wrap.position(0)
     }
 
 }

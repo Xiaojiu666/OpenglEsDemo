@@ -10,6 +10,4 @@ object VertexCoords {
         0.5f, -0.5f, 0.0f,  // bottom left
         -0.5f, -0.5f, 0.0f // bottom right
     )
-
-
 }

@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import com.sn.opengl.coords.VertexCoords
 import com.sn.opengl.graphical.MatrixNormalSquare
 import com.sn.opengl.graphical.NormalSquare
+import com.sn.opengl.graphical.NormalSquareTexture
 import com.sn.opengl.graphical.RotateSquare
 
 /**
@@ -19,8 +20,9 @@ class BaseSurfaceView @JvmOverloads constructor(
         setEGLContextClientVersion(2)
         val graphicalAttribute = GraphicalAttribute()
         graphicalAttribute.setVertexCoords(VertexCoords.triangleCoords)
+        setRenderer(NormalSquareTexture(graphicalAttribute, getContext()))
 //        setRenderer(NormalSquare(graphicalAttribute))
 //        setRenderer(MatrixNormalSquare(graphicalAttribute))
-        setRenderer(RotateSquare(graphicalAttribute))
+//        setRenderer(RotateSquare(graphicalAttribute))
     }
 }

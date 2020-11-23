@@ -1,19 +1,23 @@
 package com.sn.opengl.graphical
 
 import android.opengl.GLES20
+import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.GraphicalAttribute
 import com.sn.opengl.Utils
 import com.sn.opengl.shader.FragmentShader
 import com.sn.opengl.shader.VertexShader
+import java.nio.ByteBuffer
 
 /**
  * Created by GuoXu on 2020/11/19 19:49.
- *
+ * 1. 根据顶点坐标绘制三角形
+ * 2. 使用texCoords纹理坐标贴图
  */
 class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
     var vertexSize: Int = 0
     var mProgram: Int = 0
+
 
     val color = floatArrayOf(0.63671875f, 0.76953125f, 0.22265625f, 1.0f)
 
@@ -42,6 +46,7 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
 
     private var positionHandle: Int = 0
     private var mColorHandle: Int = 0
+
     override fun drawGraphical() {
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram)
