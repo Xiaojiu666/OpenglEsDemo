@@ -18,7 +18,7 @@ import java.nio.FloatBuffer
 
 /**
  * Created by GuoXu on 2020/11/19 19:49.
- * 1. 根据顶点坐标绘制三角形
+ * 1. https://www.jianshu.com/p/cb55d8f2b4d0
  * 2. 使用texCoords纹理坐标贴图
  */
 class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var context: Context) :
@@ -52,16 +52,22 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
         """
     //绘制坐标范围
     var vertexData = floatArrayOf(
-        -1f, -1f,
-        1f, -1.0f,
-        -1f, 1.0f,
-        1f, 1f
+        -0.5f, -0.5f,
+        0.5f, -0.5f,
+        -0.5f, 0.5f,
+        0.5f, 0.5f
     )
+    // 纹理坐标的范围通常是从(0, 0)到(1, 1)，那如果我们把纹理坐标设置在范围之外会发生什么？
+//    环绕方式	描述
+//    GL_REPEAT	对纹理的默认行为。重复纹理图像。
+//    GL_MIRRORED_REPEAT	和GL_REPEAT一样，但每次重复图片是镜像放置的。
+//    GL_CLAMP_TO_EDGE	纹理坐标会被约束在0到1之间，超出的部分会重复纹理坐标的边缘，产生一种边缘被拉伸的效果。
+//    GL_CLAMP_TO_BORDER	超出的坐标为用户指定的边缘颜色。
     var textureData = floatArrayOf(
-        0f, 1f,
-        1f, 1f,
+        0f, 2f,
+        2f, 2f,
         0f, 0f,
-        1f, 0f
+        2f, 0f
     )
 
     override fun surfaceChanged(width: Int, height: Int) {
