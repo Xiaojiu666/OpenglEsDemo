@@ -24,6 +24,7 @@ import java.nio.FloatBuffer
 class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var context: Context) :
     BaseRender() {
 
+    var mColorHandle: Int = 0
     var textureBuffer: FloatBuffer? = null
     var vertexBuffer: FloatBuffer? = null
     var texCoords = floatArrayOf(
@@ -32,24 +33,7 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
         0f, 0f, 0.0f // 上中
     )
 
-    private val VERTEX_SHADER = """
-        attribute vec4 vPosition;
-        attribute vec2 vCoordinate;
-        varying vec2 aCoordinate;
-        void main() {
-        gl_Position = vPosition;
-        aCoordinate = vCoordinate;
-        }
-        """
 
-    private val FRAGMENT_SHADER = """
-        precision mediump float;
-        uniform sampler2D vTexture;
-        varying vec2 aCoordinate;
-        void main() {
-        gl_FragColor = texture2D(vTexture,aCoordinate);
-        }
-        """
     //绘制坐标范围
     var vertexData = floatArrayOf(
         -0.5f, -0.5f,
@@ -57,17 +41,24 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
         -0.5f, 0.5f,
         0.5f, 0.5f
     )
+
     // 纹理坐标的范围通常是从(0, 0)到(1, 1)，那如果我们把纹理坐标设置在范围之外会发生什么？
 //    环绕方式	描述
 //    GL_REPEAT	对纹理的默认行为。重复纹理图像。
 //    GL_MIRRORED_REPEAT	和GL_REPEAT一样，但每次重复图片是镜像放置的。
 //    GL_CLAMP_TO_EDGE	纹理坐标会被约束在0到1之间，超出的部分会重复纹理坐标的边缘，产生一种边缘被拉伸的效果。
 //    GL_CLAMP_TO_BORDER	超出的坐标为用户指定的边缘颜色。
+//    var textureData = floatArrayOf(
+//        0f, 2f,
+//        2f, 2f,
+//        0f, 0f,
+//        2f, 0f
+//    )
     var textureData = floatArrayOf(
-        0f, 2f,
-        2f, 2f,
+        0f, 1f,
+        1f, 1f,
         0f, 0f,
-        2f, 0f
+        1f, 0f
     )
 
     override fun surfaceChanged(width: Int, height: Int) {
@@ -76,9 +67,9 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
     var TAG = "NormalSquareTexture";
     override fun initGl() {
         val vertexShader: Int =
-            loadShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER)
+            loadShader(GLES20.GL_VERTEX_SHADER, VertexShader.VERTEX_SHADER_TEXTURE)
         val fragmentShader: Int =
-            loadShader(GLES20.GL_FRAGMENT_SHADER, FRAGMENT_SHADER)
+            loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShader.FRAGMENT_SHADER_TEXTURE)
         Log.e(TAG, "vertexShader $vertexShader ,fragmentShader $fragmentShader")
 //        vertexSize =
 //            graphicalAttribute.vertextCoords?.size?.div(Utils.COORDS_VERTEX_THREE)!!
@@ -110,6 +101,8 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
         //纹理顶点
         textureHandle = GLES20.glGetAttribLocation(mProgram, "vCoordinate");
         positionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition")
+        // get handle to fragment shader's vColor member
+        mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor")
         Log.e(TAG, "textureHandle $textureHandle ,positionHandle $positionHandle")
         val textureIds = IntArray(1)
         //创建纹理
@@ -154,7 +147,7 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
     var mProgram: Int = 0
     var textureId: Int = 0
 
-
+    val color = floatArrayOf(1f, 0f, 0.22265625f, 0f)
     override fun drawGraphical() {
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram)
@@ -162,10 +155,11 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
         // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(positionHandle)
         GLES20.glEnableVertexAttribArray(textureHandle)
+        GLES20.glUniform4fv(mColorHandle, 1, color, 0)
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
             positionHandle,
-           2,
+            2,
             GLES20.GL_FLOAT,
             false,
             Utils.COORDS_VERTEX_TWO * 4,
@@ -175,7 +169,7 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
         //设置纹理位置值
         GLES20.glVertexAttribPointer(
             textureHandle,
-           2,
+            2,
             GLES20.GL_FLOAT,
             false,
             Utils.COORDS_VERTEX_TWO * 4,

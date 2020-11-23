@@ -12,12 +12,15 @@ object FragmentShader {
             "  gl_FragColor = vColor;" +
             "}"
 
-    val FragmentShaderCode_Texture = "precision mediump float;\n" +
-            "    varying vec2 v_texPo;\n" +
-            "    uniform sampler2D sTexture;\n" +
-            "    void main() {\n" +
-            "        gl_FragColor=texture2D(sTexture, v_texPo);\n" +
-            "    }"
 
+    const val FRAGMENT_SHADER_TEXTURE = """
+        precision mediump float;
+        uniform vec4 vColor;
+        uniform sampler2D vTexture;
+        varying vec2 aCoordinate;
+        void main() {
+        gl_FragColor = texture2D(vTexture,aCoordinate)* vColor ;
+        }
+        """
 
 }
