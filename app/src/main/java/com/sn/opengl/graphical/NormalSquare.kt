@@ -28,7 +28,6 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
             "normal/normal.vert",
             "normal/normal.frag"
         )
-        Log.e("TAG", "mProgram$mProgram")
 
         vertexSize =
             graphicalAttribute.vertextCoords?.size?.div(Utils.COORDS_VERTEX_THREE)!!

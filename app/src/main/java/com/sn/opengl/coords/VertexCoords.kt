@@ -6,8 +6,8 @@ package com.sn.opengl.coords
  */
 object VertexCoords {
     var triangleCoords = floatArrayOf( // in counterclockwise order:
-        0.5f, 0.5f, 0.0f,  // top
-        0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f, -0.5f, 0.0f // bottom right
+        1f,1f, 0.0f,  // top
+        1f, -1f, 0.0f,  // bottom left
+        -1f, -1f, 0.0f // bottom right
     )
 }

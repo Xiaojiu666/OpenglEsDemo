@@ -65,6 +65,7 @@ object ShaderUtils {
                 program = 0
             }
         }
+        Log.e(TAG, "mProgram$program")
         return program
     }
 

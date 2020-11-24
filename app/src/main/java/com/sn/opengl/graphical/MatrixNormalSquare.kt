@@ -2,8 +2,6 @@ package com.sn.opengl.graphical
 
 import android.opengl.GLES20
 import android.opengl.Matrix
-import android.os.SystemClock
-import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.GraphicalAttribute
 import com.sn.opengl.Utils
@@ -19,9 +17,7 @@ import com.sn.opengl.shader.VertexShader
  */
 class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
 
-
     val TAG: String = "MatrixNormalSquare"
-
     var vertexSize: Int = 0
     var mProgram: Int = 0
     val color = floatArrayOf(0.63671875f, 0.76953125f, 0.22265625f, 1.0f)
@@ -34,7 +30,6 @@ class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRende
 
     override fun surfaceChanged(width: Int, height: Int) {
         val ratio = width.toFloat() / height
-        Log.e(TAG, "ratio $ratio")
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
         // 3,4参数决定顶点镜像程度
@@ -61,16 +56,17 @@ class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRende
         }
     }
 
+    fun getOriginalMatrix(): FloatArray? {
+        return floatArrayOf(1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f)
+    }
+
     private var positionHandle: Int = 0
     private var mColorHandle: Int = 0
-
     // Use to access and set the view transformation
     private var vPMatrixHandle: Int = 0
 
 
     override fun drawGraphical() {
-//        val scratch = FloatArray(16)
-        // Set the camera position (View matrix)
 //        设置观察视角 eye相机坐标 center 目标坐标 up 相机正上方 向量vuv(相机头部指向)
         Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, -3f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
         // Calculate the projection and view transformation
