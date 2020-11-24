@@ -2,12 +2,9 @@ package com.sn.opengl.graphical
 
 import android.opengl.GLES20
 import android.util.Log
-import com.sn.opengl.BaseRender
-import com.sn.opengl.GraphicalAttribute
-import com.sn.opengl.Utils
+import com.sn.opengl.*
 import com.sn.opengl.shader.FragmentShader
 import com.sn.opengl.shader.VertexShader
-import java.nio.ByteBuffer
 
 /**
  * Created by GuoXu on 2020/11/19 19:49.
@@ -26,22 +23,15 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
 
 
     override fun initGl() {
-        val vertexShader: Int = loadShader(GLES20.GL_VERTEX_SHADER, VertexShader.VertexShaderBase)
-        val fragmentShader: Int =
-            loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShader.FragmentShaderCode)
+        mProgram = ShaderUtils.createProgram(
+            MyApp.context!!.resources,
+            "normal/normal.vert",
+            "normal/normal.frag"
+        )
+        Log.e("TAG", "mProgram$mProgram")
+
         vertexSize =
             graphicalAttribute.vertextCoords?.size?.div(Utils.COORDS_VERTEX_THREE)!!
-        // create empty OpenGL ES Program
-        mProgram = GLES20.glCreateProgram().also {
-            // add the vertex shader to program
-            GLES20.glAttachShader(it, vertexShader)
-
-            // add the fragment shader to program
-            GLES20.glAttachShader(it, fragmentShader)
-
-            // creates OpenGL ES program executables
-            GLES20.glLinkProgram(it)
-        }
     }
 
     private var positionHandle: Int = 0

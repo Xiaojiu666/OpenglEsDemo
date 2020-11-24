@@ -20,8 +20,8 @@ class BaseSurfaceView @JvmOverloads constructor(
         setEGLContextClientVersion(2)
         val graphicalAttribute = GraphicalAttribute()
         graphicalAttribute.setVertexCoords(VertexCoords.triangleCoords)
-        setRenderer(NormalSquareTexture(graphicalAttribute, getContext()))
-//        setRenderer(NormalSquare(graphicalAttribute))
+        //       setRenderer(NormalSquareTexture(graphicalAttribute, getContext()))
+        setRenderer(NormalSquare(graphicalAttribute))
 //        setRenderer(MatrixNormalSquare(graphicalAttribute))
 //        setRenderer(RotateSquare(graphicalAttribute))
     }
