@@ -147,15 +147,30 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
     var mProgram: Int = 0
     var textureId: Int = 0
 
-    val color = floatArrayOf(1f, 0f, 0.22265625f, 0f)
+    val rColor = floatArrayOf(1f, 0f, 0.22265625f, 0f)
+    val gColor = floatArrayOf(1f, 1f, 0.22265625f, 0f)
+    val bColor = floatArrayOf(0f, 0f, 1f, 0f)
+    var i = 0
     override fun drawGraphical() {
+        i++;
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(mProgram)
         // get handle to vertex shader's vPosition member
         // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(positionHandle)
         GLES20.glEnableVertexAttribArray(textureHandle)
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0)
+        when (i % 6) {
+            1 -> {
+                GLES20.glUniform4fv(mColorHandle, 1, rColor, 0)
+            }
+            2 -> {
+                GLES20.glUniform4fv(mColorHandle, 1, gColor, 0)
+            }
+            3 -> {
+                GLES20.glUniform4fv(mColorHandle, 1, bColor, 0)
+            }
+        }
+
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
             positionHandle,
