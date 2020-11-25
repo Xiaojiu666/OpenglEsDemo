@@ -15,21 +15,29 @@ import com.sn.opengl.Utils
 class MatrixDemoRender : BaseRender() {
 
     var triangleCoords = floatArrayOf( //
-        1f, 1f, 0.0f,  // top
-        1f, -1f, 0.0f,  // bottom left
-        -1f, -1f, 0.0f, // bottom right
 
-        1f, 1f, 0.0f,  // top
-        1f, -1f, 0.0f,  // bottom left
-        1f, -1f, -1f, // bottom right
 
-        -1f, -1f, 0.0f,  // top
-        1f, -1f, 0.0f,  // bottom left
-        1f, -1f, -1f, // bottom right
+        0f, 1f, 0.0f,  // top
+        -1f, 0f, 0.0f,  // bottom left
+        0f, 0f, 1f, // bottom right
 
-        1f, 1f, 0.0f,  // top
-        -1f, -1f, 0.0f,  // bottom left
-        1f, -1f, -1f // bottom right
+        0f, 1f, 0.0f,  // top
+        1f, 0f, 0.0f, // bottom right
+        0f, 0f, 1f, // bottom right
+
+        -1f, 0f, 0.0f,  // bottom left
+        1f, 0f, 0.0f, // bottom right
+        0f, 0f, 1f, // bottom right
+
+        0f, 1f, 0.0f,  // top
+        -1f, 0f, 0.0f,  // bottom left
+        1f, 0f, 0.0f, // bottom right
+
+        0f, 1f, 0.0f,  // top
+        -1f, 0f, 0.0f,  // bottom left
+        1f, 0f, 0.0f // bottom right
+
+
     )
 
 
@@ -39,17 +47,17 @@ class MatrixDemoRender : BaseRender() {
         1.0f, 0.0f, 0.0f, 0f,
 
 
-        0f, 1f, 0f, 0f,
-        0f, 1f, 0f, 0f,
-        0f, 1f, 0f, 0f,
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
+//
+        0f, 0f, 1f, 1f,
+        0f, 0f, 1f, 1f,
+        0f, 0f, 1f, 1f,
 
-        0f, 0f, 1f, 0f,
-        0f, 0f, 1f, 0f,
-        0f, 0f, 1f, 0f,
-
-        1f, 1f, 1f, 0f,
-        1f, 1f, 1f, 0f,
-        1f, 1f, 1f, 0f
+        1f, 1f, 1f, 1f,
+        1f, 1f, 1f, 1f,
+        1f, 1f, 1f, 1f
     )
 
     val TAG: String = "MatrixNormalSquare"
@@ -98,9 +106,12 @@ class MatrixDemoRender : BaseRender() {
     // Use to access and set the view transformation
     private var vPMatrixHandle: Int = 0
 
+    @Volatile
+    var mAngle = 0f
+
 
     override fun drawGraphical() {
-        Matrix.rotateM(matrix, 0, 1f, 1f, 0f, 0f)
+        Matrix.setRotateM(matrix, 0, mAngle, 1f, 1f, 1f)
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
         // Prepare the triangle coordinate data
