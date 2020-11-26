@@ -48,7 +48,6 @@ class MatrixDemoRender : BaseRender() {
         0.5f, 0.5f, 0.5f,
 
 
-
         -0.5f, 0.5f, -0.5f,               //左
         -0.5f, -0.5f, -0.5f,
         -0.5f, -0.5f, 0.5f,
@@ -142,9 +141,20 @@ class MatrixDemoRender : BaseRender() {
     var lambMatrix: FloatArray? = null
     override fun surfaceChanged(width: Int, height: Int) {
         val ratio = height.toFloat() / width
+        var lx = 0.5f
+        var ly = 0f
+        var lz = 0f
         matrix = getOriginalMatrix()
+        lambMatrix = getOriginalMatrix()
         //用于缩放,移动
         Matrix.scaleM(matrix, 0, 0.5f * ratio, 0.5f, 1f)
+
+        Matrix.translateM(lambMatrix, 0, lx, ly, lz)
+        Matrix.scaleM(lambMatrix, 0, 0.5f * ratio, 0.5f, 1f)
+        //设置相机位置在球中心
+        //Matrix.perspectiveM(mProjectMatrix,0,90,ratio,0f,300f);
+        //设置相机位置在球上
+//        Matrix.setLookAtM(mViewMatrix, 0, 0f, 0.0f,0.0f, 0.0f, 0.0f,-1.0f, 0f,1.0f, 0.0f);
     }
 
     override fun initGl() {
@@ -182,6 +192,7 @@ class MatrixDemoRender : BaseRender() {
 //        Matrix.rotateM(matrix, 0, 1f, 0f, 1f, 0f)
 //        Matrix.setRotateM(matrix, 0, 1f, 0f, 1f, 0f)
         Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5F, 0.5f)
+        Matrix.rotateM(lambMatrix, 0, -1f, 0.5f, 0.5F, 0.5f)
 
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
@@ -208,6 +219,12 @@ class MatrixDemoRender : BaseRender() {
         //GLES20.glUniform4fv(mColorHandle, 1, color, 0)
         //将投影和视图变换传递给着色器
         GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, matrix, 0)
+        GLES20.glDrawArrays(
+            GLES20.GL_TRIANGLES,
+            0,
+            vertexSize
+        )
+        GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, lambMatrix, 0)
         GLES20.glDrawArrays(
             GLES20.GL_TRIANGLES,
             0,
