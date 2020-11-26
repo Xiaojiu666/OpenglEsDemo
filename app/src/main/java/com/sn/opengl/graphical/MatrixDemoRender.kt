@@ -1,6 +1,7 @@
 package com.sn.opengl.graphical
 
 import android.opengl.GLES20
+import android.opengl.GLES20.GL_DEPTH_BUFFER_BIT
 import android.opengl.Matrix
 import android.util.Log
 import com.sn.opengl.BaseRender
@@ -17,47 +18,120 @@ class MatrixDemoRender : BaseRender() {
     var triangleCoords = floatArrayOf( //
 
 
-        0f, 1f, 0.0f,  // top
-        -1f, 0f, 0.0f,  // bottom left
-        0f, 0f, 1f, // bottom right
+        -0.5f, 0.5f, 0.5f,         //上面
+        -0.5f, 0.5f, -0.5f,
+        0.5f, 0.5f, -0.5f,
+        0.5f, 0.5f, 0.5f,
+        0.5f, 0.5f, -0.5f,
+        -0.5f, 0.5f, 0.5f,
 
-        0f, 1f, 0.0f,  // top
-        1f, 0f, 0.0f, // bottom right
-        0f, 0f, 1f, // bottom right
+        -0.5f, -0.5f, 0.5f,         //下面
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, 0.5f,
+        0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f, 0.5f,
 
-        -1f, 0f, 0.0f,  // bottom left
-        1f, 0f, 0.0f, // bottom right
-        0f, 0f, 1f, // bottom right
+        -0.5f, 0.5f, -0.5f,               //正面
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        -0.5f, 0.5f, -0.5f,               //正面
+        0.5f, -0.5f, -0.5f,
+        0.5f, 0.5f, -0.5f,
 
-        0f, 1f, 0.0f,  // top
-        -1f, 0f, 0.0f,  // bottom left
-        1f, 0f, 0.0f, // bottom right
 
-        0f, 1f, 0.0f,  // top
-        -1f, 0f, 0.0f,  // bottom left
-        1f, 0f, 0.0f // bottom right
+        -0.5f, 0.5f, 0.5f,               //正面
+        -0.5f, -0.5f, 0.5f,
+        0.5f, -0.5f, 0.5f,
+        -0.5f, 0.5f, 0.5f,               //正面
+        0.5f, -0.5f, 0.5f,
+        0.5f, 0.5f, 0.5f,
+
+
+
+        -0.5f, 0.5f, -0.5f,               //左
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f, 0.5f,
+        -0.5f, 0.5f, -0.5f,
+        -0.5f, -0.5f, 0.5f,
+        -0.5f, 0.5f, 0.5f,
+
+        0.5f, 0.5f, -0.5f,               //左
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, 0.5f,
+        0.5f, 0.5f, -0.5f,
+        0.5f, -0.5f, 0.5f,
+        0.5f, 0.5f, 0.5f
+
+//        0f, 1f, 0.0f,  // top
+//        -1f, 0f, 0.0f,  // bottom left
+//        0f, 0f, 1f, // bottom right
+//
+//        0f, 1f, 0.0f,  // top
+//        1f, 0f, 0.0f, // bottom right
+//        0f, 0f, 1f, // bottom right
+//
+//        -1f, 0f, 0.0f,  // bottom left
+//        1f, 0f, 0.0f, // bottom right
+//        0f, 0f, 1f, // bottom right
+//
+//        0f, 1f, 0.0f,  // top
+//        -1f, 0f, 0.0f,  // bottom left
+//        1f, 0f, 0.0f, // bottom right
+//
+//        0f, 1f, 0.0f,  // top
+//        -1f, 0f, 0.0f,  // bottom left
+//        1f, 0f, 0.0f // bottom right
 
 
     )
 
 
     var color = floatArrayOf(
-        1.0f, 0.0f, 0.0f, 0f,
-        1.0f, 0.0f, 0.0f, 0f,
-        1.0f, 0.0f, 0.0f, 0f,
+        0.5f, 0.5f, 0.5f, 1f,
+        0.5f, 0.5f, 0.5f, 1f,
+        0.5f, 0.5f, 0.5f, 1f,
+        0.5f, 0.5f, 0.5f, 1f,
+        0.5f, 0.5f, 0.5f, 1f,
+        0.5f, 0.5f, 0.5f, 1f,
 
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
+        0f, 1f, 0f, 1f,
 
-        0f, 1f, 0f, 1f,
-        0f, 1f, 0f, 1f,
-        0f, 1f, 0f, 1f,
-//
         0f, 0f, 1f, 1f,
         0f, 0f, 1f, 1f,
         0f, 0f, 1f, 1f,
+        0f, 0f, 1f, 1f,
+        0f, 0f, 1f, 1f,
+        0f, 0f, 1f, 1f,
+
+        1f, 0f, 0f, 1f,
+        1f, 0f, 0f, 1f,
+        1f, 0f, 0f, 1f,
+        1f, 0f, 0f, 1f,
+        1f, 0f, 0f, 1f,
+        1f, 0f, 0f, 1f,
 
         1f, 1f, 1f, 1f,
         1f, 1f, 1f, 1f,
-        1f, 1f, 1f, 1f
+        1f, 1f, 1f, 1f,
+        1f, 1f, 1f, 1f,
+        1f, 1f, 1f, 1f,
+        1f, 1f, 1f, 1f,
+
+
+        0f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f
+
     )
 
     val TAG: String = "MatrixNormalSquare"
@@ -68,17 +142,9 @@ class MatrixDemoRender : BaseRender() {
     var lambMatrix: FloatArray? = null
     override fun surfaceChanged(width: Int, height: Int) {
         val ratio = height.toFloat() / width
-        var lx = 0.5f
-        var ly = 0.5f
-        var lz = -1f
         matrix = getOriginalMatrix()
         //用于缩放,移动
         Matrix.scaleM(matrix, 0, 0.5f * ratio, 0.5f, 1f)
-//        Matrix.translateM(matrix, 0, lx, ly, lz)
-        lambMatrix = getOriginalMatrix()
-
-        Matrix.translateM(lambMatrix, 0, lx, ly, lz)
-        Matrix.scaleM(lambMatrix, 0, 0.09f, 0.09f * width / height, 0.09f)
     }
 
     override fun initGl() {
@@ -94,6 +160,7 @@ class MatrixDemoRender : BaseRender() {
         vPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix")
         //获取片元着色器的vColor成员的句柄
         mColorHandle = GLES20.glGetAttribLocation(mProgram, "aColor")
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST) //Z缓冲
     }
 
     fun getOriginalMatrix(): FloatArray? {
@@ -111,7 +178,11 @@ class MatrixDemoRender : BaseRender() {
 
 
     override fun drawGraphical() {
-        Matrix.setRotateM(matrix, 0, mAngle, 1f, 1f, 1f)
+        GLES20.glClear(GL_DEPTH_BUFFER_BIT)
+//        Matrix.rotateM(matrix, 0, 1f, 0f, 1f, 0f)
+//        Matrix.setRotateM(matrix, 0, 1f, 0f, 1f, 0f)
+        Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5F, 0.5f)
+
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
         // Prepare the triangle coordinate data

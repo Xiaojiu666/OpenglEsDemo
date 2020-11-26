@@ -3,6 +3,7 @@ package com.sn.opengl
 import android.content.Context
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import com.sn.opengl.coords.VertexCoords
 import com.sn.opengl.graphical.*
@@ -15,6 +16,7 @@ class BaseSurfaceView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : GLSurfaceView(context, attrs) {
 
+    private val TAG: String? = "BaseSurfaceView"
     var matrixDemoRender: MatrixDemoRender? = null
 
     init {
@@ -50,6 +52,7 @@ class BaseSurfaceView @JvmOverloads constructor(
                 }
                 matrixDemoRender?.mAngle = matrixDemoRender?.mAngle!! +
                         (dx + dy) * TOUCH_SCALE_FACTOR
+                Log.e(TAG, "mAngle${matrixDemoRender?.mAngle}");
                 requestRender()
             }
         }
