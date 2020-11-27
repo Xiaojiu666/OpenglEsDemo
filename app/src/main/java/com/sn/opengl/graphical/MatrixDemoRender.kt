@@ -155,14 +155,6 @@ class MatrixDemoRender : BaseRender() {
         Matrix.scaleM(matrix, 0, 0.5f * ratio, 0.5f, 1f)
         Matrix.translateM(lambMatrix, 0, lx, ly, lz)
         Matrix.scaleM(lambMatrix, 0, 0.5f * ratio, 0.5f, 1f)
-        //设置相机位置在球中心
-        //Matrix.perspectiveM(mProjectMatrix,0,90,ratio,0f,300f);
-        //设置相机位置在球上
-//        Matrix.setLookAtM(mViewMatrix, 0, 1f, 2f,2f, 0.5f, 0.5f,0.5F, 0f,0f, 0.0f);
-
-        // Calculate the projection and view transformation
-//        Matrix.multiplyMM(matrix, 0, projectionMatrix, 0, mViewMatrix, 0)
-
     }
 
     override fun initGl() {
@@ -194,14 +186,33 @@ class MatrixDemoRender : BaseRender() {
     private var vPMatrixHandle: Int = 0
 
 
+    var eyeX = 0.0f
+    var eyeZ = 2f
+    private fun CameraMatrix() {
+        //投影转换矩阵
+        Matrix.frustumM(projectionMatrix, 0, -1f, 1f, -1f, 1f, 1f, 100f)
+        //视见转换矩阵
+        Matrix.setLookAtM(mViewMatrix, 0, eyeX, 0f, eyeZ, 0f, 0f, 0f, 0f, 1f, 0f)
+        Matrix.multiplyMM(matrix, 0, projectionMatrix, 0, mViewMatrix, 0)
+    }
+
 
     override fun drawGraphical() {
         GLES20.glClear(GL_DEPTH_BUFFER_BIT)
 //        Matrix.rotateM(matrix, 0, 1f, 0f, 1f, 0f)
 //        Matrix.setRotateM(matrix, 0, 1f, 0f, 1f, 0f)
-        Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5F, 0.5f)
-        Matrix.rotateM(lambMatrix, 0, -1f, 0.5f, 0.5F, 0.5f)
-
+//        Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5F, 0.5f)
+//        Matrix.rotateM(lambMatrix, 0, -1f, 0.5f, 0.5F, 0.5f)
+        eyeX += 0.01f;
+        if (eyeX >= 2f) {
+            eyeX = 2f
+            eyeZ -= 0.01f
+            if (eyeZ <= 0f) {
+                eyeX = 2f
+                eyeZ = 0f
+            }
+        }
+        CameraMatrix()
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
         // Prepare the triangle coordinate data

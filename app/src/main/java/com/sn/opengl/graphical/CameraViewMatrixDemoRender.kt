@@ -2,10 +2,12 @@ package com.sn.opengl.graphical
 
 import android.opengl.GLES20
 import android.opengl.Matrix
+import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.MyApp
 import com.sn.opengl.ShaderUtils
 import com.sn.opengl.Utils
+import kotlin.math.cos
 
 
 /**
@@ -44,9 +46,22 @@ class CameraViewMatrixDemoRender : BaseRender() {
 //        CameraMatrix()
     }
 
+    var span = (Math.PI / 180).toFloat()
+    var i = 0
+    /**
+     * 旋转相机矩阵
+     */
     private fun CameraMatrix() {
+        i += 1
+        if (i >= 360) {
+            i = 0
+        }
+        val a = span * i
+        var eyeX = (cos(a.toDouble())).toFloat() * 2
+        var eyeZ = Math.sin(a.toDouble()).toFloat() * 2
+        Log.e(TAG, "eyeX $eyeX , eyeZ $eyeZ")
         //投影转换矩阵
-        Matrix.frustumM(projectionMatrix, 0, -1f, 1f, -1f, 1f, 1f, 100f)
+        Matrix.frustumM(projectionMatrix, 0, -1f, 1f, -1f, 1f, 2f, 100f)
         //视见转换矩阵
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, 0f, eyeZ, 0f, 0f, 0f, 0f, 1f, 0f)
         Matrix.multiplyMM(matrix, 0, projectionMatrix, 0, mViewMatrix, 0)
@@ -77,21 +92,10 @@ class CameraViewMatrixDemoRender : BaseRender() {
     private var vPMatrixHandle: Int = 0
 
 
-    var eyeX = 0.0f
-    var eyeZ = 2f
-
     override fun drawGraphical() {
 //        Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5f, 0f)
         // Add program to OpenGL ES environment
-        eyeX += 0.01f;
-        if (eyeX >= 2f) {
-            eyeX = 2f
-            eyeZ -= 0.01f
-            if (eyeZ <= 0f) {
-                eyeX = 2f
-                eyeZ = 0f
-            }
-        }
+
         CameraMatrix()
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
