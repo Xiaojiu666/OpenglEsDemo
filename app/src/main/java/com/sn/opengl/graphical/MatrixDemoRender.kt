@@ -139,6 +139,8 @@ class MatrixDemoRender : BaseRender() {
 
     var matrix: FloatArray? = null
     var lambMatrix: FloatArray? = null
+    var mViewMatrix: FloatArray? = null
+    var projectionMatrix: FloatArray? = null
     override fun surfaceChanged(width: Int, height: Int) {
         val ratio = height.toFloat() / width
         var lx = 0.5f
@@ -146,15 +148,21 @@ class MatrixDemoRender : BaseRender() {
         var lz = 0f
         matrix = getOriginalMatrix()
         lambMatrix = getOriginalMatrix()
+        mViewMatrix = getOriginalMatrix()
+        projectionMatrix = getOriginalMatrix()
+
         //用于缩放,移动
         Matrix.scaleM(matrix, 0, 0.5f * ratio, 0.5f, 1f)
-
         Matrix.translateM(lambMatrix, 0, lx, ly, lz)
         Matrix.scaleM(lambMatrix, 0, 0.5f * ratio, 0.5f, 1f)
         //设置相机位置在球中心
         //Matrix.perspectiveM(mProjectMatrix,0,90,ratio,0f,300f);
         //设置相机位置在球上
-//        Matrix.setLookAtM(mViewMatrix, 0, 0f, 0.0f,0.0f, 0.0f, 0.0f,-1.0f, 0f,1.0f, 0.0f);
+//        Matrix.setLookAtM(mViewMatrix, 0, 1f, 2f,2f, 0.5f, 0.5f,0.5F, 0f,0f, 0.0f);
+
+        // Calculate the projection and view transformation
+//        Matrix.multiplyMM(matrix, 0, projectionMatrix, 0, mViewMatrix, 0)
+
     }
 
     override fun initGl() {
@@ -166,6 +174,7 @@ class MatrixDemoRender : BaseRender() {
         vertexSize = triangleCoords.size.div(Utils.COORDS_VERTEX_THREE)
 
         positionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition")
+        cameraHandle = GLES20.glGetAttribLocation(mProgram, "uCameraMatrix")
 //        mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor")
         vPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix")
         //获取片元着色器的vColor成员的句柄
@@ -179,12 +188,11 @@ class MatrixDemoRender : BaseRender() {
 
     private var positionHandle: Int = 0
     private var mColorHandle: Int = 0
+    private var cameraHandle: Int =0
 
     // Use to access and set the view transformation
     private var vPMatrixHandle: Int = 0
 
-    @Volatile
-    var mAngle = 0f
 
 
     override fun drawGraphical() {

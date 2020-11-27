@@ -12,11 +12,16 @@ import javax.microedition.khronos.opengles.GL10
  * Created by GuoXu on 2020/11/19 19:16.
  *
  */
-abstract class  BaseRender : GLSurfaceView.Renderer {
+abstract class BaseRender : GLSurfaceView.Renderer {
 
+
+    private var baseProgram: Int = 0
+
+    @Volatile
+    var mAngle = 0f
 
     override fun onDrawFrame(p0: GL10?) {
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
         drawGraphical()
     }
 
@@ -29,6 +34,7 @@ abstract class  BaseRender : GLSurfaceView.Renderer {
     override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
         // Set the background frame color
         GLES20.glClearColor(0f, 0f, 0f, 0.5f)
+
         initGl()
     }
 
@@ -37,7 +43,6 @@ abstract class  BaseRender : GLSurfaceView.Renderer {
     abstract fun initGl()
 
     abstract fun drawGraphical()
-
 
     fun loadShader(type: Int, shaderCode: String?): Int {
         // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
@@ -59,4 +64,17 @@ abstract class  BaseRender : GLSurfaceView.Renderer {
         wrap.position(0)
     }
 
+
+    //绘制坐标范围
+    var basevertexData = floatArrayOf(
+        0F, 0f, 0.0f,  // top
+        1f, 0f, 0.0f, // bottom left
+        0F, 0f, 0.0f,  // top
+        0f, 1f, 0.0f, // bottom left
+        0F, 0f, 0.0f,  // top
+        0f, 0f, 1f // bottom left
+    )
+
+    val baseColor = floatArrayOf(1f, 0f, 0f, 1.0f)
 }
+

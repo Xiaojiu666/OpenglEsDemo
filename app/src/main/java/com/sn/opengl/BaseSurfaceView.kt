@@ -17,13 +17,13 @@ class BaseSurfaceView @JvmOverloads constructor(
 ) : GLSurfaceView(context, attrs) {
 
     private val TAG: String? = "BaseSurfaceView"
-    var matrixDemoRender: MatrixDemoRender? = null
+    var matrixDemoRender: BaseRender? = null
 
     init {
         setEGLContextClientVersion(2)
         val graphicalAttribute = GraphicalAttribute()
         graphicalAttribute.setVertexCoords(VertexCoords.triangleCoords)
-        matrixDemoRender = MatrixDemoRender()
+        matrixDemoRender = CameraViewMatrixDemoRender()
         setRenderer(matrixDemoRender)
     }
 
@@ -45,7 +45,6 @@ class BaseSurfaceView @JvmOverloads constructor(
                 if (y > height / 2) {
                     dx = dx * -1
                 }
-
                 // reverse direction of rotation to left of the mid-line
                 if (x < width / 2) {
                     dy = dy * -1

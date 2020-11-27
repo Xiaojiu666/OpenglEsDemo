@@ -21,14 +21,12 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
     override fun surfaceChanged(width: Int, height: Int) {
     }
 
-
     override fun initGl() {
         mProgram = ShaderUtils.createProgram(
             MyApp.context!!.resources,
             "normal/normal.vert",
             "normal/normal.frag"
         )
-
         vertexSize =
             graphicalAttribute.vertextCoords?.size?.div(Utils.COORDS_VERTEX_THREE)!!
     }
