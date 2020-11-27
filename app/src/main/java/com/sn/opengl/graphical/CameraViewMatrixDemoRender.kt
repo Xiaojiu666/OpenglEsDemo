@@ -40,12 +40,15 @@ class CameraViewMatrixDemoRender : BaseRender() {
         lambMatrix = getOriginalMatrix()
         mViewMatrix = getOriginalMatrix()
         projectionMatrix = getOriginalMatrix()
-
         //https://blog.csdn.net/jamesshaoya/article/details/54342241
+//        CameraMatrix()
+    }
+
+    private fun CameraMatrix() {
         //投影转换矩阵
         Matrix.frustumM(projectionMatrix, 0, -1f, 1f, -1f, 1f, 1f, 100f)
         //视见转换矩阵
-        Matrix.setLookAtM(mViewMatrix, 0, eyeX, 0f, 2f, 0f, 0f, 0f, 0f, 1f, 0f)
+        Matrix.setLookAtM(mViewMatrix, 0, eyeX, 0f, eyeZ, 0f, 0f, 0f, 0f, 1f, 0f)
         Matrix.multiplyMM(matrix, 0, projectionMatrix, 0, mViewMatrix, 0)
     }
 
@@ -81,7 +84,15 @@ class CameraViewMatrixDemoRender : BaseRender() {
 //        Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5f, 0f)
         // Add program to OpenGL ES environment
         eyeX += 0.01f;
-
+        if (eyeX >= 2f) {
+            eyeX = 2f
+            eyeZ -= 0.01f
+            if (eyeZ <= 0f) {
+                eyeX = 2f
+                eyeZ = 0f
+            }
+        }
+        CameraMatrix()
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
         GLES20.glEnableVertexAttribArray(mColorHandle)
