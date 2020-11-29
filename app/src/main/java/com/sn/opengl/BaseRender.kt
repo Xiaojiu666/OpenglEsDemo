@@ -16,6 +16,7 @@ abstract class BaseRender : GLSurfaceView.Renderer {
 
 
     private var baseProgram: Int = 0
+    var baseSurfaceView: BaseSurfaceView? = null
 
     @Volatile
     var mAngle = 0f

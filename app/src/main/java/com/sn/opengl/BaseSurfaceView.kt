@@ -1,3 +1,4 @@
+
 package com.sn.opengl
 
 import android.content.Context
@@ -23,7 +24,7 @@ class BaseSurfaceView @JvmOverloads constructor(
         setEGLContextClientVersion(2)
         val graphicalAttribute = GraphicalAttribute()
         graphicalAttribute.setVertexCoords(VertexCoords.triangleCoords)
-        matrixDemoRender = CameraViewMatrixDemoRender()
+        matrixDemoRender = MatrixDemoRender()
         setRenderer(matrixDemoRender)
     }
 

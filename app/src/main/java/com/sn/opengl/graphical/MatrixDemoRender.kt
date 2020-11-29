@@ -8,6 +8,7 @@ import com.sn.opengl.BaseRender
 import com.sn.opengl.MyApp
 import com.sn.opengl.ShaderUtils
 import com.sn.opengl.Utils
+import kotlin.math.cos
 
 
 /**
@@ -186,9 +187,18 @@ class MatrixDemoRender : BaseRender() {
     private var vPMatrixHandle: Int = 0
 
 
-    var eyeX = 0.0f
-    var eyeZ = 2f
+
+    var span = (Math.PI / 180).toFloat()
+    var i = 0
     private fun CameraMatrix() {
+        i += 1
+        if (i >= 360) {
+            i = 0
+        }
+        val a = span * i
+        var eyeX = (cos(a.toDouble())).toFloat() * 2
+        var eyeZ = Math.sin(a.toDouble()).toFloat() * 2
+        Log.e(TAG, "eyeX $eyeX , eyeZ $eyeZ")
         //投影转换矩阵
         Matrix.frustumM(projectionMatrix, 0, -1f, 1f, -1f, 1f, 1f, 100f)
         //视见转换矩阵
@@ -203,15 +213,6 @@ class MatrixDemoRender : BaseRender() {
 //        Matrix.setRotateM(matrix, 0, 1f, 0f, 1f, 0f)
 //        Matrix.rotateM(matrix, 0, 1f, 0.5f, 0.5F, 0.5f)
 //        Matrix.rotateM(lambMatrix, 0, -1f, 0.5f, 0.5F, 0.5f)
-        eyeX += 0.01f;
-        if (eyeX >= 2f) {
-            eyeX = 2f
-            eyeZ -= 0.01f
-            if (eyeZ <= 0f) {
-                eyeX = 2f
-                eyeZ = 0f
-            }
-        }
         CameraMatrix()
         GLES20.glUseProgram(mProgram)
         GLES20.glEnableVertexAttribArray(positionHandle)
