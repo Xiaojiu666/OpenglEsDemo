@@ -7,7 +7,7 @@ import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.MyApp
 import com.sn.opengl.ShaderUtils
-import com.sn.opengl.Utils
+import com.sn.plugin_opengl.utils.Utils
 import kotlin.math.cos
 
 
@@ -164,7 +164,7 @@ class MatrixDemoRender : BaseRender() {
             "matrix/matrix.vert",
             "matrix/matrix.frag"
         )
-        vertexSize = triangleCoords.size.div(Utils.COORDS_VERTEX_THREE)
+        vertexSize = triangleCoords.size.div(com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE)
 
         positionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition")
         cameraHandle = GLES20.glGetAttribLocation(mProgram, "uCameraMatrix")
@@ -219,11 +219,11 @@ class MatrixDemoRender : BaseRender() {
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
             positionHandle,
-            Utils.COORDS_VERTEX_THREE,
+            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE,
             GLES20.GL_FLOAT,
             false,
-            Utils.COORDS_VERTEX_THREE * 4,
-            Utils.ArrayToBuffer(triangleCoords)
+            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE * 4,
+            com.sn.plugin_opengl.utils.Utils.ArrayToBuffer(triangleCoords)
         )
 
         //设置绘制三角形的颜色
@@ -233,7 +233,7 @@ class MatrixDemoRender : BaseRender() {
         GLES20.glVertexAttribPointer(
             mColorHandle, 4,
             GLES20.GL_FLOAT, false,
-            0, Utils.ArrayToBuffer(color)
+            0, com.sn.plugin_opengl.utils.Utils.ArrayToBuffer(color)
         )
         //直接设置color属性的值
         //GLES20.glUniform4fv(mColorHandle, 1, color, 0)

@@ -1,10 +1,7 @@
 package com.sn.opengl.graphical
 
 import android.opengl.GLES20
-import android.util.Log
 import com.sn.opengl.*
-import com.sn.opengl.shader.FragmentShader
-import com.sn.opengl.shader.VertexShader
 
 /**
  * Created by GuoXu on 2020/11/19 19:49.
@@ -28,7 +25,7 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
             "normal/normal.frag"
         )
         vertexSize =
-            graphicalAttribute.vertextCoords?.size?.div(Utils.COORDS_VERTEX_THREE)!!
+            graphicalAttribute.vertextCoords?.size?.div(com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE)!!
     }
 
     private var positionHandle: Int = 0
@@ -45,10 +42,10 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
             // Prepare the triangle coordinate data
             GLES20.glVertexAttribPointer(
                 it,
-                Utils.COORDS_VERTEX_THREE,
+                com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE,
                 GLES20.GL_FLOAT,
                 false,
-                Utils.COORDS_VERTEX_THREE * 4,
+                com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE * 4,
                 graphicalAttribute.vertexCoordsBuffer
             )
             // get handle to fragment shader's vColor member

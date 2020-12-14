@@ -10,8 +10,6 @@ import java.nio.FloatBuffer
  */
 object Utils {
 
-    const val COORDS_VERTEX_THREE = 3
-    const val COORDS_VERTEX_TWO = 2
 
     fun ArrayToBuffer(array: FloatArray): FloatBuffer {
         return ByteBuffer.allocateDirect(array.size * 4).run {

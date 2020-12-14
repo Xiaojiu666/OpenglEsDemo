@@ -4,7 +4,7 @@ import android.opengl.GLES20
 import android.opengl.Matrix
 import com.sn.opengl.BaseRender
 import com.sn.opengl.GraphicalAttribute
-import com.sn.opengl.Utils
+import com.sn.plugin_opengl.utils.Utils
 import com.sn.opengl.shader.FragmentShader
 import com.sn.opengl.shader.VertexShader
 
@@ -42,7 +42,7 @@ class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRende
         val fragmentShader: Int =
             loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShader.FragmentShaderCode)
         vertexSize =
-            graphicalAttribute.vertextCoords?.size?.div(Utils.COORDS_VERTEX_THREE)!!
+            graphicalAttribute.vertextCoords?.size?.div(com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE)!!
         // create empty OpenGL ES Program
         mProgram = GLES20.glCreateProgram().also {
             // add the vertex shader to program
@@ -81,10 +81,10 @@ class MatrixNormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRende
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
             positionHandle,
-            Utils.COORDS_VERTEX_THREE,
+            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE,
             GLES20.GL_FLOAT,
             false,
-            Utils.COORDS_VERTEX_THREE * 4,
+            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE * 4,
             graphicalAttribute.vertexCoordsBuffer
         )
 

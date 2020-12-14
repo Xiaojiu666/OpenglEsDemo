@@ -17,25 +17,19 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by GuoXu on 2020/9/9 17:07.
  */
-public class CameraRender implements GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener {
+public class CameraRender implements GLSurfaceView.Renderer{
 
     private static final String TAG = "CameraRender";
     public Activity mContext;
-    private int[] texture;
+    private int[] texture= new int[1];
     private CameraDrawer1 mDrawer1;
 
     public CameraRender(Activity mContext) {
         this.mContext = mContext;
     }
 
-    private SurfaceTexture mSurfaceTexture;
-
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        if (mRenderListener != null) {
-            mRenderListener.onSurfaceCreated(gl, config);
-        }
-        texture = new int[1];
         GLES20.glGenTextures(1, texture, 0);
         // OES纹理坐标配置 绘制YUV格式图片
         GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, texture[0]);
@@ -44,20 +38,15 @@ public class CameraRender implements GLSurfaceView.Renderer, SurfaceTexture.OnFr
         GLES20.glTexParameteri(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
         GLES20.glTexParameteri(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
         mDrawer1 = new CameraDrawer1();
-        mSurfaceTexture = new SurfaceTexture(texture[0]);
-        mSurfaceTexture.setDefaultBufferSize(4000, 3000);
-        //监听有新图像到来
-        mSurfaceTexture.setOnFrameAvailableListener(this);
-        new Camera2Loader.Builder((Activity) mContext)
-                .setCameraId("0")
-                .setRatio(new Size(1, 1))
-                .setPreviewSurface(new Surface(mSurfaceTexture))
-                .openCamera();
+        if (mRenderListener != null) {
+            mRenderListener.onSurfaceTextureCreated(new SurfaceTexture(texture[0]));
+        }
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         Log.e(TAG, "onSurfaceChanged");
+        mDrawer1.setSize(width,height);
     }
 
     @Override
@@ -65,26 +54,24 @@ public class CameraRender implements GLSurfaceView.Renderer, SurfaceTexture.OnFr
         Log.e(TAG, "onDrawFrame");
         GLES20.glClearColor(0, 0, 0, 0);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-        mSurfaceTexture.updateTexImage();
+        if (mRenderListener != null) {
+            mRenderListener.onDrawFrame();
+        }
+
         mDrawer1.draw(texture[0], false);
     }
 
-    @Override
-    public void onFrameAvailable(SurfaceTexture surfaceTexture) {
-        Log.e(TAG, "onFrameAvailable");
-    }
 
-    public RenderListener mRenderListener;
+    public OnSurfaceTextureListener mRenderListener;
 
-    public void setRenderListener(RenderListener mRenderListener) {
+    public void setRenderListener(OnSurfaceTextureListener mRenderListener) {
         this.mRenderListener = mRenderListener;
     }
 
-    interface RenderListener {
-        void onSurfaceCreated(GL10 var1, EGLConfig var2);
 
-        void onSurfaceChanged(GL10 var1, int var2, int var3);
+    public interface OnSurfaceTextureListener {
+        void onDrawFrame();
 
-        void onDrawFrame(GL10 var1);
+        void onSurfaceTextureCreated(SurfaceTexture surfaceTexture);
     }
 }

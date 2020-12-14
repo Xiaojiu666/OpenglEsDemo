@@ -1,6 +1,5 @@
 package com.sn.opengl
 
-import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
 /**
