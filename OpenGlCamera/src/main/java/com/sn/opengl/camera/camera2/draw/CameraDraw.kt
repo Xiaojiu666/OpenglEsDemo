@@ -1,7 +1,6 @@
 package com.sn.opengl.camera.camera2.draw
 
 import android.content.Context
-import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.util.Log
 import java.nio.FloatBuffer
@@ -26,7 +25,7 @@ class CameraDraw :
         GLES20.glUseProgram(mProgram) // 指定使用的program
         GLES20.glEnable(GLES20.GL_CULL_FACE) // 启动剔除
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureId) // 绑定纹理
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId) // 绑定纹理
 
         GLES20.glEnableVertexAttribArray(mPositionHandle)
         GLES20.glVertexAttribPointer(
@@ -58,5 +57,9 @@ class CameraDraw :
         super.onInit(context)
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition")
         mTextureHandle = GLES20.glGetAttribLocation(mProgram, "inputTextureCoordinate")
+        Log.e(
+            "onDraw ",
+            "mPositionHandle$mPositionHandle ，mTextureHandle$mTextureHandle  "
+        )
     }
 }

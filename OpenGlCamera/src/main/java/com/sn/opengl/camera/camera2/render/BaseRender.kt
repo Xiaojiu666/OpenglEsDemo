@@ -24,6 +24,7 @@ class BaseRender(private val mDraw: BaseDraw, var context: Context) :
             1f, 1f,
             1f, -1f
         )
+
         private val TEXTURE_NO_ROTATION = floatArrayOf(
             0f, 1f,
             1f, 1f,
@@ -45,30 +46,6 @@ class BaseRender(private val mDraw: BaseDraw, var context: Context) :
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
         mDraw.onInit(context)
         initBuffer()
-        GLES20.glGenTextures(1, texture, 0)
-        // OES纹理坐标配置 绘制YUV格式图片
-        // OES纹理坐标配置 绘制YUV格式图片
-        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, texture.get(0))
-        GLES20.glTexParameterf(
-            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
-            GL10.GL_TEXTURE_MIN_FILTER,
-            GL10.GL_LINEAR.toFloat()
-        )
-        GLES20.glTexParameterf(
-            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
-            GL10.GL_TEXTURE_MAG_FILTER,
-            GL10.GL_LINEAR.toFloat()
-        )
-        GLES20.glTexParameteri(
-            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
-            GL10.GL_TEXTURE_WRAP_S,
-            GL10.GL_CLAMP_TO_EDGE
-        )
-        GLES20.glTexParameteri(
-            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
-            GL10.GL_TEXTURE_WRAP_T,
-            GL10.GL_CLAMP_TO_EDGE
-        )
         if (mRenderListener != null) {
             mRenderListener?.onSurfaceTextureCreated(SurfaceTexture(texture[0]))
         }
@@ -78,6 +55,7 @@ class BaseRender(private val mDraw: BaseDraw, var context: Context) :
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
         GLES20.glViewport(0, 0, width, height)
         GLES20.glUseProgram(mDraw.mProgram)
+        mDraw.onOutputSizeChanged(width, height)
     }
 
     override fun onDrawFrame(gl: GL10) {

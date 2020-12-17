@@ -7,7 +7,9 @@ import android.util.AttributeSet
 import android.util.Log
 import android.util.Size
 import android.view.Surface
+import com.sn.opengl.camera.camera2.draw.BaseDraw
 import com.sn.opengl.camera.camera2.draw.CameraDraw
+import com.sn.opengl.camera.camera2.draw.PixelDraw
 import com.sn.opengl.camera.camera2.render.BaseRender
 
 /**
