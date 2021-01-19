@@ -1,4 +1,4 @@
 include ':plugin_opengl'
-include ':OpenGlCamera'
+include ':plugin_camera'
 include ':app'
 rootProject.name = "OpenGlDemo"

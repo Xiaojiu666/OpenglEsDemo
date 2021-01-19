@@ -71,7 +71,7 @@ class Camera2Loader(var mContext: Activity) : DeviceManager(mContext), CameraLoa
      */
     private val mStateCallBack: CameraDevice.StateCallback = object : CameraDevice.StateCallback() {
         override fun onOpened(camera: CameraDevice) {
-            Log.e(TAG, "onOpened")
+           Log.e(TAG, "onOpened")
             mCameraDevice = camera
             createCaptureSession(camera)
         }
@@ -118,7 +118,7 @@ class Camera2Loader(var mContext: Activity) : DeviceManager(mContext), CameraLoa
             captureRequestBuilder.set(
                 CaptureRequest.CONTROL_AE_MODE,
                 CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH
-            ) // 闪光灯
+            )
             captureRequestBuilder.set(
                 CaptureRequest.CONTROL_AF_MODE,
                 CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
@@ -141,7 +141,6 @@ class Camera2Loader(var mContext: Activity) : DeviceManager(mContext), CameraLoa
                                 mCameraHandler
                             )
                         }
-
                         override fun onConfigureFailed(session: CameraCaptureSession) {
                             Log.e(TAG, "开启预览会话失败")
                         }

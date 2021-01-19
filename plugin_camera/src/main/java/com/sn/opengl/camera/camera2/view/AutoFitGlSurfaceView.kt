@@ -32,8 +32,8 @@ class AutoFitGlSurfaceView @JvmOverloads constructor(
 
     init {
         setEGLContextClientVersion(2)
-        val baseRender = BaseRender(CameraDraw(), getContext())
-        baseRender?.setRenderListener(this)
+        val baseRender = BaseRender(PixelDraw(), getContext())
+        baseRender.setRenderListener(this)
         setRenderer(baseRender)
 //        renderMode = RENDERMODE_WHEN_DIRTY
     }
