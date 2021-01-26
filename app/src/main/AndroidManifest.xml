@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenGlDemo">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".activity.CameraDemoActivity">
+
+        </activity>
+        <activity android:name=".activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +28,6 @@
             </intent-filter>
         </activity>
 
-
+        <activity android:name=".activity.GraphActivity" />
     </application>
-
 </manifest>

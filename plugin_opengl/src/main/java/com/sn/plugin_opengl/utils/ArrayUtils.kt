@@ -8,7 +8,7 @@ import java.nio.FloatBuffer
  * Created by GuoXu on 2020/11/20 14:23.
  *
  */
-class Array2BufferUtils {
+class ArrayUtils {
     companion object {
         fun transformFloat(array: FloatArray): FloatBuffer {
             return ByteBuffer.allocateDirect(array.size * 4).run {

@@ -6,7 +6,6 @@ import android.os.SystemClock
 import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.GraphicalAttribute
-import com.sn.plugin_opengl.utils.Utils
 import com.sn.opengl.shader.FragmentShader
 import com.sn.opengl.shader.VertexShader
 
@@ -42,7 +41,7 @@ class RotateSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
         val fragmentShader: Int =
             loadShader(GLES20.GL_FRAGMENT_SHADER, FragmentShader.FragmentShaderCode)
         vertexSize =
-            graphicalAttribute.vertextCoords?.size?.div(com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE)!!
+            graphicalAttribute.vertextCoords?.size?.div(3)!!
         // create empty OpenGL ES Program
         mProgram = GLES20.glCreateProgram().also {
             // add the vertex shader to program
@@ -90,10 +89,10 @@ class RotateSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
         // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
             positionHandle,
-            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE,
+            3,
             GLES20.GL_FLOAT,
             false,
-            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE * 4,
+            3 * 4,
             graphicalAttribute.vertexCoordsBuffer
         )
 

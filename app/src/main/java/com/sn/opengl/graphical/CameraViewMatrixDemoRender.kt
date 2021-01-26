@@ -6,7 +6,7 @@ import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.MyApp
 import com.sn.opengl.ShaderUtils
-import com.sn.plugin_opengl.utils.Array2BufferUtils
+import com.sn.plugin_opengl.utils.ArrayUtils
 
 import kotlin.math.cos
 
@@ -108,12 +108,12 @@ class CameraViewMatrixDemoRender : BaseRender() {
             GLES20.GL_FLOAT,
             false,
             3 * 4,
-            Array2BufferUtils.transformFloat(basevertexData)
+            ArrayUtils.transformFloat(basevertexData)
         )
         GLES20.glVertexAttribPointer(
             mColorHandle, 4,
             GLES20.GL_FLOAT, false,
-            0,  Array2BufferUtils.transformFloat(color)
+            0,  ArrayUtils.transformFloat(color)
         )
 
         // get handle to fragment shader's vColor member

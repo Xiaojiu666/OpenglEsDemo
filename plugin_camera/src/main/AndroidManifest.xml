@@ -10,13 +10,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenGlDemo">
-        <activity android:name=".camera2.CameraDemoActivity">
+        <activity android:name="com.sn.opengl.activity.CameraDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
 
     </application>

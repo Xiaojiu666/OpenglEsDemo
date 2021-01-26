@@ -25,7 +25,7 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
             "normal/normal.frag"
         )
         vertexSize =
-            graphicalAttribute.vertextCoords?.size?.div(com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE)!!
+            graphicalAttribute.vertextCoords?.size?.div(3)!!
     }
 
     private var positionHandle: Int = 0
@@ -42,10 +42,10 @@ class NormalSquare(var graphicalAttribute: GraphicalAttribute) : BaseRender() {
             // Prepare the triangle coordinate data
             GLES20.glVertexAttribPointer(
                 it,
-                com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE,
+                3,
                 GLES20.GL_FLOAT,
                 false,
-                com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_THREE * 4,
+                3 * 4,
                 graphicalAttribute.vertexCoordsBuffer
             )
             // get handle to fragment shader's vColor member

@@ -6,10 +6,6 @@ import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
-import android.util.Size;
-import android.view.Surface;
-
-import com.sn.opengl.camera.camera2.Camera2Loader;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

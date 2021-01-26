@@ -8,7 +8,6 @@ import android.util.Log
 import com.sn.opengl.BaseRender
 import com.sn.opengl.GraphicalAttribute
 import com.sn.opengl.R
-import com.sn.plugin_opengl.utils.Utils
 import com.sn.opengl.shader.FragmentShader
 import com.sn.opengl.shader.VertexShader
 import java.nio.ByteBuffer
@@ -177,7 +176,7 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
             2,
             GLES20.GL_FLOAT,
             false,
-            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_TWO * 4,
+            2 * 4,
             vertexBuffer
         )
 
@@ -187,7 +186,7 @@ class NormalSquareTexture(var graphicalAttribute: GraphicalAttribute, var contex
             2,
             GLES20.GL_FLOAT,
             false,
-            com.sn.plugin_opengl.utils.Utils.COORDS_VERTEX_TWO * 4,
+            2 * 4,
             textureBuffer
         )
 

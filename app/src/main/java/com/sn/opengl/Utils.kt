@@ -8,7 +8,7 @@ import java.nio.FloatBuffer
  * Created by GuoXu on 2020/11/20 14:23.
  *
  */
-object Utils {
+object  Utils {
 
 
     fun ArrayToBuffer(array: FloatArray): FloatBuffer {

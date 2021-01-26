@@ -1,4 +1,4 @@
-package com.sn.opengl.camera.camera2.view
+package com.sn.plugin_opengl.view
 
 import android.content.Context
 import android.graphics.SurfaceTexture
@@ -7,19 +7,13 @@ import android.util.AttributeSet
 import android.util.Log
 import android.util.Size
 import android.view.Surface
-import com.sn.opengl.camera.camera2.draw.BaseDraw
-import com.sn.opengl.camera.camera2.draw.CameraDraw
-import com.sn.opengl.camera.camera2.draw.PixelDraw
-import com.sn.opengl.camera.camera2.render.BaseRender
-
 /**
  * Created by GuoXu on 2020/12/7 15:17.
  */
-class AutoFitGlSurfaceView @JvmOverloads constructor(
+open class AutoFitGlSurfaceView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null
-) : GLSurfaceView(context, attrs), BaseRender.OnSurfaceTextureListener,
-    SurfaceTexture.OnFrameAvailableListener {
+) : GLSurfaceView(context, attrs){
 
 
     companion object {
@@ -29,14 +23,6 @@ class AutoFitGlSurfaceView @JvmOverloads constructor(
     private var mSurfaceTexture: SurfaceTexture? = null
     private var ratioWidth = 0
     private var ratioHeight = 0
-
-    init {
-        setEGLContextClientVersion(2)
-        val baseRender = BaseRender(PixelDraw(), getContext())
-        baseRender.setRenderListener(this)
-        setRenderer(baseRender)
-        renderMode = RENDERMODE_WHEN_DIRTY
-    }
 
 
     fun setAspectRatio(size: Size) {
@@ -81,35 +67,6 @@ class AutoFitGlSurfaceView @JvmOverloads constructor(
 //            }
         }
     }
-
-    override fun onDrawFrame() {
-        Log.e(TAG, "onDrawFrame");
-//        mSurfaceTexture?.updateTexImage();
-    }
-
-    override fun onSurfaceTextureCreated(surfaceTexture: SurfaceTexture?) {
-        this.mSurfaceTexture = surfaceTexture;
-        mSurfaceTexture!!.setDefaultBufferSize(ratioWidth, ratioHeight)
-        mSurfaceTexture!!.setOnFrameAvailableListener(this)
-        if (glSurfaceViewListener != null) {
-            glSurfaceViewListener?.onSurfaceCreated(Surface(mSurfaceTexture))
-        }
-    }
-
-    override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
-
-    }
-
-    private var glSurfaceViewListener: GlSurfaceViewListener? = null
-
-    fun setGlSurfaceViewListener(glSurfaceViewListener: GlSurfaceViewListener?) {
-        this.glSurfaceViewListener = glSurfaceViewListener
-    }
-
-    interface GlSurfaceViewListener {
-        fun onSurfaceCreated(surface: Surface)
-    }
-
 }
 
 

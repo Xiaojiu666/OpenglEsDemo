@@ -2,11 +2,12 @@ package com.sn.opengl.camera.camera2.render
 
 import android.content.Context
 import android.graphics.SurfaceTexture
-import android.opengl.GLES11Ext
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
+import android.util.Log
 import com.sn.opengl.camera.camera2.draw.BaseDraw
-import com.sn.plugin_opengl.utils.Array2BufferUtils.Companion.transformFloat
+import com.sn.opengl.camera.camera2.view.AutoFitGlSurfaceView
+import com.sn.plugin_opengl.utils.ArrayUtils.Companion.transformFloat
 import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -59,6 +60,7 @@ class BaseRender(private val mDraw: BaseDraw, var context: Context) :
     }
 
     override fun onDrawFrame(gl: GL10) {
+        Log.e(AutoFitGlSurfaceView.TAG, "onDrawFrame");
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT or GLES20.GL_DEPTH_BUFFER_BIT)
         GLES20.glClearColor(0f, 0f, 0f, 0f)
         mRenderListener?.onDrawFrame()

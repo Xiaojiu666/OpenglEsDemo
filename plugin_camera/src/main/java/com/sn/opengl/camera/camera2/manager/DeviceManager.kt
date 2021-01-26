@@ -16,20 +16,14 @@ import java.util.*
 open class DeviceManager(context: Context) {
 
     companion object {
-        const val CAMERA_RATIO_FOUR_THREE = 0
-        const val CAMERA_RATIO_SIXTEEN_NINE = 1
-        const val CAMERA_RATIO_ONE_ONE = 2
         const val TAG = "DeviceManager"
     }
 
     var cameraManager: CameraManager? = null
-    var windowManager: WindowManager? = null
 
     init {
         cameraManager =
             context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        windowManager =
-            context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     }
 
     /**
