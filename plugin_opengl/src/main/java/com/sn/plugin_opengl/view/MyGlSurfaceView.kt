@@ -4,18 +4,32 @@ import android.content.Context
 import android.util.AttributeSet
 import com.sn.plugin_opengl.GPUImageRender
 import com.sn.plugin_opengl.filter.Filter
-import com.sn.plugin_opengl.filter.GraphicalFilter
-import java.io.File
+import com.sn.plugin_opengl.graph.GraphBase
+import com.sn.plugin_opengl.graph.GraphColorTriangle
 
 class MyGlSurfaceView(context: Context?, attrs: AttributeSet? = null) :
     AutoFitGlSurfaceView(context, attrs) {
 
+    var filter: Filter? = null
+    var baseRender: GPUImageRender? = null
+
     init {
         setEGLContextClientVersion(2)
-        var filter = GraphicalFilter(getContext())
-        val baseRender = GPUImageRender(filter)
-        setRenderer(baseRender)
-        renderMode = RENDERMODE_CONTINUOUSLY
+        filter = GraphColorTriangle(getContext())
+        filter?.let {
+            baseRender = GPUImageRender(it)
+            setRenderer(baseRender)
+            renderMode = RENDERMODE_CONTINUOUSLY
+        }
+
     }
+
+    fun setNewFilter(newGLFilter: Filter) {
+        baseRender?.glFilter?.destroy()
+        baseRender?.glFilter = newGLFilter
+        baseRender?.glFilter?.onInit()
+        requestRender()
+    }
+
 
 }

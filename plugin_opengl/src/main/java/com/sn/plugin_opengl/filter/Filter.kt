@@ -9,11 +9,10 @@ open class Filter(var context: Context) {
 
     companion object {
         const val NO_TEXTURE = 0
-
     }
 
     val CUBE = floatArrayOf(
-        1f,1f, 0.0f,  // top
+        1f, 1f, 0.0f,  // top
         1f, -1f, 0.0f,  // bottom left
         -1f, -1f, 0.0f // bottom right
     )
@@ -29,7 +28,7 @@ open class Filter(var context: Context) {
     open fun onDrawFrame(textureId: Int, verTextBuffer: FloatBuffer, textureBuffer: FloatBuffer) {
     }
 
-    open fun onInit(){
+    open fun onInit() {
 
     }
 
@@ -41,7 +40,7 @@ open class Filter(var context: Context) {
         )
     }
 
-    fun getVertexBuffer(): FloatArray {
+    open fun getVertexBuffer(): FloatArray {
         return CUBE
     }
 
@@ -53,5 +52,9 @@ open class Filter(var context: Context) {
         return glProgramId
     }
 
-
+    fun destroy() {
+        GLES20.glDeleteProgram(glProgramId)
+        onDestroy()
+    }
+    open fun onDestroy() {}
 }

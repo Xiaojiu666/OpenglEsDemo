@@ -9,6 +9,7 @@ package com.sn.plugin_opengl.utils
 import android.content.res.Resources
 import android.opengl.GLES20
 import android.util.Log
+import java.lang.NullPointerException
 
 /**
  *  用来管理创建 ShaderUtils
@@ -25,13 +26,12 @@ object ShaderUtils {
             GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0)
             if (compiled[0] == 0) {
                 Log.e(TAG, "Could not compile shader:$shaderType")
-                Log.e(
-                    TAG,
-                    "GLES20 Error:" + GLES20.glGetShaderInfoLog(shader)
-                )
+                Log.e(TAG, "GLES20 Error:" + GLES20.glGetShaderInfoLog(shader))
                 GLES20.glDeleteShader(shader)
                 shader = 0
             }
+        }else{
+            throw NullPointerException("$shaderType init fail")
         }
         return shader
     }
@@ -93,7 +93,7 @@ object ShaderUtils {
                 result.append(String(buffer, 0, ch))
             }
         } catch (e: Exception) {
-            return null
+            throw e
         }
         return result.toString().replace("\\r\\n".toRegex(), "\n")
     }

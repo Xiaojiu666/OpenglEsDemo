@@ -2,6 +2,7 @@ package com.sn.plugin_opengl
 
 import android.opengl.GLES20
 import android.opengl.GLSurfaceView
+import android.util.Log
 import com.sn.plugin_opengl.filter.Filter
 import com.sn.plugin_opengl.utils.ArrayUtils
 import java.nio.FloatBuffer
@@ -24,12 +25,14 @@ class GPUImageRender(var glFilter: Filter) : GLSurfaceView.Renderer {
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
+        Log.e(TAG, "onSurfaceChanged widht:$width height:$height")
         GLES20.glViewport(0, 0, width, height)
         glFilter.onInit()
     }
 
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
+        Log.e(TAG, "onSurfaceCreated")
         GLES20.glClearColor(backgroundRed, backgroundGreen, backgroundBlue, 1f)
     }
 

@@ -1,15 +1,16 @@
-package com.sn.plugin_opengl.filter
+package com.sn.plugin_opengl.graph
 
 import android.content.Context
 import android.opengl.GLES20
 import android.util.Log
+import com.sn.plugin_opengl.filter.Filter
 import java.nio.FloatBuffer
 
 /**
  * 形状--默认基类
- * 彩虹色三角形
+ * 三角形
  */
-class GraphicalFilter(context: Context) : Filter(context) {
+class GraphBase(context: Context) : Filter(context) {
 
     val TAG = "GraphicalFilter"
     var vertexString: String? = "normal/normal.vert"
@@ -45,6 +46,11 @@ class GraphicalFilter(context: Context) : Filter(context) {
         )
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(vPostion)
+    }
+
+
+    override fun getVertexBuffer(): FloatArray {
+        return CUBE
     }
 
 
