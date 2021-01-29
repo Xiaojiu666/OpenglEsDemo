@@ -25,11 +25,6 @@ class MyGlSurfaceView(context: Context?, attrs: AttributeSet? = null) :
     }
 
     fun setNewFilter(newGLFilter: Filter) {
-        baseRender?.glFilter?.destroy()
-        baseRender?.glFilter = newGLFilter
-        baseRender?.glFilter?.onInit()
-        requestRender()
+        baseRender?.setNetGlFilter(newGLFilter)
     }
-
-
 }

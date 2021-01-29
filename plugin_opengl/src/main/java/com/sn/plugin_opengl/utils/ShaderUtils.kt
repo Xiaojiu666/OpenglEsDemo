@@ -30,7 +30,7 @@ object ShaderUtils {
                 GLES20.glDeleteShader(shader)
                 shader = 0
             }
-        }else{
+        } else {
             throw NullPointerException("$shaderType init fail")
         }
         return shader
