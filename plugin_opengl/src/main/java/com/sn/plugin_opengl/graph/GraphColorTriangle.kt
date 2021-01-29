@@ -6,10 +6,11 @@ import android.util.Log
 import com.sn.plugin_opengl.filter.Filter
 import com.sn.plugin_opengl.utils.ArrayUtils
 import java.nio.FloatBuffer
+import kotlin.random.Random
 
 /**
  * 彩色三角形
- *
+ * https://blog.csdn.net/weixin_30788239/article/details/99263454?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control
  */
 class GraphColorTriangle(context: Context) : Filter(context) {
     val TAG = "GraphicalFilter"
@@ -17,6 +18,7 @@ class GraphColorTriangle(context: Context) : Filter(context) {
     var fragmentString: String? = "normal/color_triangle.frag"
     var vPostion: Int = -1
     var zColor: Int = -1
+    var ourColor: Int = -1
     var colorBuffer: FloatBuffer? = null
 
     //设置颜色
@@ -27,22 +29,29 @@ class GraphColorTriangle(context: Context) : Filter(context) {
     )
 
     override fun onInit() {
-        Log.e(TAG,"onInit GraphColorTriangle")
+        Log.e(TAG, "onInit GraphColorTriangle")
         createProgram(vertexString!!, fragmentString!!)
         vPostion = GLES20.glGetAttribLocation(glProgramId, "vPosition")
         zColor = GLES20.glGetAttribLocation(glProgramId, "zColor")
+
         colorBuffer = getVColorBuffer()
+
     }
 
+//    var i: Float = 0f
     override fun onDrawFrame(
         textureId: Int,
         verTextBuffer: FloatBuffer,
         textureBuffer: FloatBuffer
     ) {
-        Log.e(TAG, "glProgramId$glProgramId zColor $zColor vPostion$vPostion")
+//        i += 0.001f
+        var rColor = Random.nextFloat()
         GLES20.glUseProgram(glProgramId)
         GLES20.glEnableVertexAttribArray(vPostion)
         GLES20.glEnableVertexAttribArray(zColor)
+        ourColor = GLES20.glGetUniformLocation(glProgramId, "ourColor")
+        Log.e(TAG, "ourColor$ourColor rColor $rColor ")
+        GLES20.glUniform1f(ourColor, rColor)
         GLES20.glVertexAttribPointer(
             vPostion,
             3,
