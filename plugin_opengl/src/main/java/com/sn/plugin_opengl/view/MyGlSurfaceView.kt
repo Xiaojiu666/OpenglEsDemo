@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.sn.plugin_opengl.GPUImageRender
 import com.sn.plugin_opengl.filter.Filter
-import com.sn.plugin_opengl.graph.GraphBase
+import com.sn.plugin_opengl.graph.GraphColorRect
 import com.sn.plugin_opengl.graph.GraphColorTriangle
 
 class MyGlSurfaceView(context: Context?, attrs: AttributeSet? = null) :
@@ -15,7 +15,7 @@ class MyGlSurfaceView(context: Context?, attrs: AttributeSet? = null) :
 
     init {
         setEGLContextClientVersion(2)
-        filter = GraphColorTriangle(getContext())
+        filter = GraphColorRect(getContext())
         filter?.let {
             baseRender = GPUImageRender(it)
             setRenderer(baseRender)

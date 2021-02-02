@@ -9,6 +9,7 @@ open class Filter(var context: Context) {
 
     companion object {
         const val NO_TEXTURE = 0
+        const val ONE_POINT_SIZE = 3  // 一个点的xyz
     }
 
     val CUBE = floatArrayOf(
@@ -56,5 +57,6 @@ open class Filter(var context: Context) {
         GLES20.glDeleteProgram(glProgramId)
         onDestroy()
     }
+
     open fun onDestroy() {}
 }

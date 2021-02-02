@@ -10,7 +10,7 @@ import java.nio.FloatBuffer
  * 形状--默认基类
  * 三角形
  */
-class GraphBase(context: Context) : Filter(context) {
+class Graph(context: Context) : Filter(context) {
 
     val TAG = "GraphicalFilter"
     var vertexString: String? = "normal/normal.vert"
@@ -30,11 +30,8 @@ class GraphBase(context: Context) : Filter(context) {
         verTextBuffer: FloatBuffer,
         textureBuffer: FloatBuffer
     ) {
-        Log.e(TAG, " glProgramId $glProgramId vPostion $vPostion vColor $vColor")
-        Log.e(TAG, " verTextBuffer $verTextBuffer")
         GLES20.glUseProgram(glProgramId)
         if (textureId == NO_TEXTURE) {
-//            Log.e(TAG, " NO_TEXTURE $NO_TEXTURE")
         }
         GLES20.glEnableVertexAttribArray(vPostion)
         GLES20.glVertexAttribPointer(vPostion, 3, GLES20.GL_FLOAT, false, 3 * 4, verTextBuffer)

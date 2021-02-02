@@ -9,6 +9,8 @@ import java.nio.FloatBuffer
  *
  */
 class ArrayUtils {
+
+
     companion object {
         fun transformFloat(array: FloatArray): FloatBuffer {
             return ByteBuffer.allocateDirect(array.size * 4).run {
