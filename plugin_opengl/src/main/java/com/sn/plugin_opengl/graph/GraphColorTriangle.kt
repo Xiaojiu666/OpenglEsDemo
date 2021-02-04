@@ -23,8 +23,8 @@ class GraphColorTriangle(context: Context) : Filter(context) {
 
     //设置颜色
     var color = floatArrayOf(
-        0.0f, 1.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 0.0f, 1.0f,
+        0.0f, 1.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 1.0f, 1.0f
     )
 
@@ -41,7 +41,8 @@ class GraphColorTriangle(context: Context) : Filter(context) {
         verTextBuffer: FloatBuffer,
         textureBuffer: FloatBuffer
     ) {
-        var rColor = Random.nextFloat()
+//        var rColor = Random.nextFloat()
+        var rColor = 0.0f
         GLES20.glUseProgram(glProgramId)
         GLES20.glEnableVertexAttribArray(vPostion)
         GLES20.glEnableVertexAttribArray(zColor)

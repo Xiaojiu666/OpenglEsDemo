@@ -7,13 +7,14 @@ import android.util.AttributeSet
 import android.util.Log
 import android.util.Size
 import android.view.Surface
+
 /**
  * Created by GuoXu on 2020/12/7 15:17.
  */
 open class AutoFitGlSurfaceView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null
-) : GLSurfaceView(context, attrs){
+) : GLSurfaceView(context, attrs) {
 
 
     companion object {

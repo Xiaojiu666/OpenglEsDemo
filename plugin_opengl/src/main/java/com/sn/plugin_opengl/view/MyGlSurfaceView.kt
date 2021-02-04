@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.sn.plugin_opengl.GPUImageRender
 import com.sn.plugin_opengl.filter.Filter
+import com.sn.plugin_opengl.graph.Graph
 import com.sn.plugin_opengl.graph.GraphColorRect
 import com.sn.plugin_opengl.graph.GraphColorTriangle
 
