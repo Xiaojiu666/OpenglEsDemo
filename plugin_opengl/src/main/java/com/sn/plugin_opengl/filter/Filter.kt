@@ -1,7 +1,9 @@
 package com.sn.plugin_opengl.filter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.opengl.GLES20
+import android.opengl.GLUtils
 import com.sn.plugin_opengl.utils.ShaderUtils
 import java.nio.FloatBuffer
 
@@ -59,4 +61,29 @@ open class Filter(var context: Context) {
     }
 
     open fun onDestroy() {}
+
+    fun loadTexture(img: Bitmap): Int {
+        val textures = IntArray(1)
+        GLES20.glGenTextures(1, textures, 0)
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES20.GL_TEXTURE_2D,
+            GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE.toFloat()
+        )
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, img, 0)
+        img.recycle()
+        return textures[0]
+    }
 }

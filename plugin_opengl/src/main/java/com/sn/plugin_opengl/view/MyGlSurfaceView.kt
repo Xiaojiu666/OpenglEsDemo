@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import com.sn.plugin_opengl.GPUImageRender
 import com.sn.plugin_opengl.filter.Filter
-import com.sn.plugin_opengl.graph.Graph
 import com.sn.plugin_opengl.graph.GraphColorRect
 import com.sn.plugin_opengl.graph.GraphColorTriangle
+import com.sn.plugin_opengl.graph.GraphTextureRect
 
 class MyGlSurfaceView(context: Context?, attrs: AttributeSet? = null) :
     AutoFitGlSurfaceView(context, attrs) {
@@ -16,11 +16,12 @@ class MyGlSurfaceView(context: Context?, attrs: AttributeSet? = null) :
 
     init {
         setEGLContextClientVersion(2)
-        filter = GraphColorRect(getContext())
+        filter = GraphTextureRect(getContext())
         filter?.let {
             baseRender = GPUImageRender(it)
             setRenderer(baseRender)
-            renderMode = RENDERMODE_CONTINUOUSLY
+           renderMode = RENDERMODE_CONTINUOUSLY
+//             renderMode = RENDERMODE_WHEN_DIRTY
         }
 
     }

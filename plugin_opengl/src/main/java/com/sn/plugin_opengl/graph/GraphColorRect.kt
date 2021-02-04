@@ -17,7 +17,7 @@ class GraphColorRect(context: Context) : Filter(context) {
     var vertexString: String? = "normal/color_triangle.vert"
     var fragmentString: String? = "normal/color_triangle.frag"
     var vPostion: Int = -1
-    var vColor: Int = -1
+    var zColor: Int = -1
     var ourColor: Int = -1
     var colorBuffer: FloatBuffer? = null
 
@@ -25,24 +25,24 @@ class GraphColorRect(context: Context) : Filter(context) {
     var color = floatArrayOf(
         1.0f, 0.0f, 0.0f, 1.0f,
         0.0f, 1.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 1.0f
-//        0.0f, 1.0f, 0.0f, 1.0f,
-//        1.0f, 0.0f, 0.0f, 1.0f
+        0.0f, 0.0f, 1.0f, 1.0f
+        ,1.0f, 1.0f, 1.0f, 1.0f
+//        1.0f, 1.0f, 1.0f, 1.0f,
+//        0.0f, 0.0f, 0.0f, 1.0f
     )
 
     var verTextRect = floatArrayOf(
         -1f, 1f, 0f,
         -1f, -1f, 0f,
-        1f, 1f, 0f,
-        1f, -1f, 0f
+        1f, 1f, 0f
+        , 1f, -1f, 0f
     )
 
     override fun onInit() {
         Log.e(TAG, "onInit GraphColorTriangle")
         createProgram(vertexString!!, fragmentString!!)
         vPostion = GLES20.glGetAttribLocation(glProgramId, "vPosition")
-        vColor = GLES20.glGetUniformLocation(glProgramId, "vColor")
+        zColor = GLES20.glGetAttribLocation(glProgramId, "zColor")
         colorBuffer = getVColorBuffer()
     }
 
@@ -52,24 +52,23 @@ class GraphColorRect(context: Context) : Filter(context) {
         textureBuffer: FloatBuffer
     ) {
 //        var rColor = Random.nextFloat()
-        var rColor = 0f
+        var rColor = 0.0f
         GLES20.glUseProgram(glProgramId)
         GLES20.glEnableVertexAttribArray(vPostion)
-        GLES20.glEnableVertexAttribArray(vColor)
+        GLES20.glEnableVertexAttribArray(zColor)
         ourColor = GLES20.glGetUniformLocation(glProgramId, "ourColor")
-        GLES20.glUniform1f(ourColor, rColor)
+//        GLES20.glUniform1f(ourColor, rColor)
         GLES20.glVertexAttribPointer(
             vPostion,
-            getVertexBuffer().size / ONE_POINT_SIZE,
+            3,
             GLES20.GL_FLOAT,
             false,
             ONE_POINT_SIZE * 4,
             verTextBuffer
         )
-        GLES20.glVertexAttribPointer(vColor, 4, GLES20.GL_FLOAT, false, 16, colorBuffer)
+        GLES20.glVertexAttribPointer(zColor, 4, GLES20.GL_FLOAT, false, 0, colorBuffer)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
         GLES20.glDisableVertexAttribArray(vPostion)
-        GLES20.glDisableVertexAttribArray(vColor)
     }
 
 

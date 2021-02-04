@@ -41,7 +41,6 @@ class GraphColorTriangle(context: Context) : Filter(context) {
         verTextBuffer: FloatBuffer,
         textureBuffer: FloatBuffer
     ) {
-//        var rColor = Random.nextFloat()
         var rColor = 0.0f
         GLES20.glUseProgram(glProgramId)
         GLES20.glEnableVertexAttribArray(vPostion)
@@ -49,12 +48,13 @@ class GraphColorTriangle(context: Context) : Filter(context) {
         //传递变量，控制片元着色器 根据输入值变化rgba的颜色
         ourColor = GLES20.glGetUniformLocation(glProgramId, "ourColor")
         GLES20.glUniform1f(ourColor, rColor)
-        GLES20.glVertexAttribPointer(vPostion, 3, GLES20.GL_FLOAT, false, 3 * 4, verTextBuffer)
+        GLES20.glVertexAttribPointer(vPostion, 3, GLES20.GL_FLOAT, false, 0, verTextBuffer)
         //设置绘制三角形的颜色
         GLES20.glVertexAttribPointer(zColor, 4, GLES20.GL_FLOAT, false, 0, colorBuffer)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 3)
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(vPostion)
+        GLES20.glDisableVertexAttribArray(zColor)
     }
 
 

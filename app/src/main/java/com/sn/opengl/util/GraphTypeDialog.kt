@@ -7,10 +7,7 @@ import android.util.Log
 import com.sn.opengl.menu.GraphType
 import com.sn.opengl.menu.GraphType.*
 import com.sn.plugin_opengl.filter.Filter
-import com.sn.plugin_opengl.graph.Graph
-import com.sn.plugin_opengl.graph.GraphColorRect
-import com.sn.plugin_opengl.graph.GraphColorTriangle
-import com.sn.plugin_opengl.graph.GraphRect
+import com.sn.plugin_opengl.graph.*
 import java.util.*
 
 object GraphTypeDialog {
@@ -24,6 +21,7 @@ object GraphTypeDialog {
             addFilter("正方形", RECT)
             addFilter("彩色三角形", TRIANGLE_COLOR)
             addFilter("彩色正方形", RECT_COLOR)
+            addFilter("图片纹理正方形", RECT_TEXTURE)
         }
         val builder = AlertDialog.Builder(context)
         builder.setTitle("请选择一个图形")
@@ -40,6 +38,7 @@ object GraphTypeDialog {
             RECT -> GraphRect(context)
             TRIANGLE_COLOR -> GraphColorTriangle(context)
             RECT_COLOR ->GraphColorRect(context)
+            RECT_TEXTURE -> GraphTextureRect(context)
         }
     }
 

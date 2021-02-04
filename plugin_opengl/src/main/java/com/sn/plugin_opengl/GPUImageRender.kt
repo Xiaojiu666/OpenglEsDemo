@@ -29,6 +29,7 @@ class GPUImageRender(var glFilter: Filter) : GLSurfaceView.Renderer {
         glFilter.onDrawFrame(0, getVertexBuffer(), getTextureBuffer())
     }
 
+
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         Log.e(TAG, "onSurfaceChanged widht:$width height:$height")
         GLES20.glViewport(0, 0, width, height)
@@ -39,6 +40,7 @@ class GPUImageRender(var glFilter: Filter) : GLSurfaceView.Renderer {
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         Log.e(TAG, "onSurfaceCreated")
         GLES20.glClearColor(backgroundRed, backgroundGreen, backgroundBlue, 1f)
+        GLES20.glDisable(GLES20.GL_DEPTH_TEST)
     }
 
     fun getVertexBuffer(): FloatBuffer {
@@ -74,5 +76,31 @@ class GPUImageRender(var glFilter: Filter) : GLSurfaceView.Renderer {
     fun runOnDraw(runnable: Runnable?) {
         synchronized(runOnDraw!!) { runOnDraw!!.add(runnable) }
     }
+//
+//    fun setImageBitmap(bitmap: Bitmap?, recycle: Boolean) {
+//        if (bitmap == null) {
+//            return
+//        }
+//        runOnDraw(Runnable {
+//            var resizedBitmap: Bitmap? = null
+//            if (bitmap.width % 2 == 1) {
+//                resizedBitmap = Bitmap.createBitmap(
+//                    bitmap.width + 1, bitmap.height,
+//                    Bitmap.Config.ARGB_8888
+//                )
+//                resizedBitmap.density = bitmap.density
+//                val can = Canvas(resizedBitmap)
+//                can.drawARGB(0x00, 0x00, 0x00, 0x00)
+//                can.drawBitmap(bitmap, 0f, 0f, null)
+//            } else {
+//            }
+////            glTextureId = OpenGlUtils.loadTexture(
+////                resizedBitmap ?: bitmap, glTextureId, recycle
+////            )
+//            resizedBitmap?.recycle()
+//        })
+//    }
+
 
 }
+
